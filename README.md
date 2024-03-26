@@ -1,6 +1,8 @@
 # Medical-Answer
 Knowledge Graph for medical answer using neo4j
 
+# Data
+Data is collected by spider
 # Process
 1. Build_medicalgraph
 2. question classify
