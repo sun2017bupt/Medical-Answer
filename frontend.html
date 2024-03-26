@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>查询页面</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #input-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #answer-container {
+            text-align: center;
+        }
+        #input {
+            width: 300px; /* 设置输入框宽度 */
+            padding: 5px; /* 添加内边距 */
+        }
+        #answer {
+            width: 300px; /* 设置文本框宽度 */
+            height: 100px; /* 设置文本框高度 */
+            padding: 5px; /* 添加内边距 */
+        }
+        #submit-button {
+            margin-top: 10px; /* 设置按钮与其他元素的垂直间距 */
+        }
+    </style>
+</head>
+<body>
+    <div id="input-container">
+        <label for="input">输入字符串:</label>
+        <input type="text" id="input" placeholder="在这里输入字符串">
+        <button id="submit-button">提交</button>
+    </div>
+    <div id="answer-container">
+        <label for="answer">响应内容:</label>
+        <textarea id="answer" rows="5" cols="30" readonly></textarea>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const input = document.getElementById("input");
+            const submitButton = document.getElementById("submit-button");
+            const answerElement = document.getElementById("answer");
+
+            submitButton.addEventListener("click", function() {
+                const userInput = input.value;
+                if (userInput) {
+                    // 发送GET请求到localhost:8080/query
+                    fetch(`http://localhost:8080/query?input=${encodeURIComponent(userInput)}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`请求失败，状态码：${response.status}`);
+                            }
+                            return response.text();
+                        })
+                        .then(data => {
+                            // 将后端返回的答案显示在文本框中
+                            answerElement.value = data;
+                        })
+                        .catch(error => {
+                            // 处理请求失败
+                            console.error("请求失败:", error);
+                            answerElement.value = "请求失败，请重试。";
+                        });
+                } else {
+                    alert("请输入字符串");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
