@@ -8,3 +8,4 @@ Knowledge Graph for medical answer using neo4j
 4. answer search
 5. open .html
    
+![image](https://github.com/sun2017bupt/Medical-Answer/assets/73296185/7a1e2e59-8015-4e69-bcaa-230615baadd4)
